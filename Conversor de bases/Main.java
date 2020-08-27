@@ -8,41 +8,93 @@ import java.util.Scanner;
 
 public class Main {
 	
-	public static int binToDec(String[] n){
-		int numDec=0;
-		for(int i=0; i<n.length; i++) {
+	public static double binToDec(String[] n){
+		double numDec=0;
+		for(int i=n.length-1; i>=0; i--) { //percorre todos os digitos
 			if(n[i].equals("1")) {
-				numDec += Math.pow(2, i);
-			}
+				numDec = numDec +  Math.pow(2, n.length-1-i);
+			} 
 		}
 		
-		return numDec;
+		return numDec;  
 	}
 	
-	public static String[] binToHex(String[] n) {
-		int numDec = binToDec(n);
+	public static String binToHex(String[] n) {
 		
-		String[] numHex = String.valueOf(numDec).split("");
+		String[] numHex = new String[n.length/4];
+		int c = 0; //contador das posições do numero em hexa 
 		
-//		for(int i=0; i<numDec)
-		
-		return numHex;
+		for(int i=0; i<n.length; i+=4) {
+			
+			String[] quatroNums = {n[i], n[i+1], n[i+2], n[i+3]};
+			
+//			for(int cont=0; cont<4; cont++) {
+//				System.out.print(quatroNums[cont] + " ");
+//			}
+//			System.out.println();
+//			
+			double numDec = binToDec(quatroNums); 
+			
+			switch((int)numDec) {
+				
+				case 10: 
+					numHex[c] = "A";
+					break;
+					
+				case 11:
+					numHex[c] = "B";
+					break;
+					
+				case 12:
+					numHex[c] = "C";
+					break;
+					
+				case 13:
+					numHex[c] = "D";
+					break;
+					
+				case 14:
+					numHex[c] = "E";
+					break;
+					
+				case 15:
+					numHex[c] = "F";
+					break;
+					
+				default:
+					numHex[c] = String.valueOf((int)numDec);
+					break;
+			}
+			
+			c++;
+		}
+
+		return String.join("", numHex);
 	}
 	
-	public static ArrayList<Integer> decToBin(int num) {
-		ArrayList<Integer> numBin = new ArrayList <Integer>();
+	public static String[] decToBin(int num) {
+		ArrayList<String> numBin = new ArrayList <String>();
 		
 		while(num/2 > 0) {
-			numBin.add(num%2);
+			numBin.add(String.valueOf(num%2)); 
 			num = num/2;
 		}
 		if(num/2 == 0) {
-			numBin.add(num%2);
+			numBin.add(String.valueOf(num%2));
 			
 		}
 		Collections.reverse(numBin);
-		return numBin;
+		
+		if(numBin.size() % 2 == 1) {
+			numBin.add(0, "0");
+		}
+		
+		return numBin.toArray(String[]::new);
 	}
+	
+//	public static ArrayList<Integer> decToHex(ArrayList<Integer> num){
+//		
+//	}
 	
 	public static String[] hexToBin(String[] numHex){
 		String[] numDec = new String[numHex.length]; //nÃ£o Ã© a conversÃ£o direta pra decimal !!!!!!!!
@@ -86,37 +138,43 @@ public class Main {
 //   		BufferedReader buffer = new BufferedReader(new InputStreamReader(System.in));
    		Scanner input = new Scanner(System.in);
    		int caso = 1;
-   		int c = input.nextInt();
-   		for(int i=0; i<c; i++) {
-   			String n = input.next();
-   			String tipo = input.next();
    		
-   			if(tipo.equals("bin")) {
-   				
-   				int numDec = binToDec(n.split(""));
-   				String[] numHex = binToHex(n.split(""));
-   				System.out.println("Case " + caso + ":");
-   				System.out.println(numDec + "dec");
-//   				System.out.println(numHex + "\n");
-   				
-   			}
-   			else if(tipo.equals("dec")) {
-   				ArrayList<Integer> numBin = decToBin(Integer.valueOf(n));
-   				System.out.println("Case " + caso + ":");
-   				System.out.print("");
-   				for(int cont=0; cont<numBin.size(); cont++) {
-   					System.out.print(numBin.get(cont));
-   				}
-   				
-   			}
-   			else if(tipo.equals("hex")) {
-   				System.out.println("Case " + caso + ":\n");
-   				String[] numBin = hexToBin(n.split(""));
+   		System.out.println("Informe o número: ");
+		String n = input.next();
+		System.out.println("Informe a base decimal do número [BIN, DEC OU HEX]: ");
+		String tipo = input.next();
+	
+		if(tipo.equals("bin")) {
+			 
+			double numDec = binToDec(n.split(""));
+			System.out.printf("Em dec: %.0f \n", numDec);
+			String numHex = binToHex(n.split(""));
+			System.out.println("Em hex: " + numHex);
+
+		}
+		
+		else if(tipo.equals("dec")) {
+			String[] numBin = decToBin(Integer.valueOf(n));
+
+			System.out.print("Em bin: ");
+			for(int cont=0; cont<numBin.length; cont++) { 
+				System.out.print(numBin[cont]);
+			}
+			String numHex = binToHex(numBin);
+			
+			System.out.print("\nEm hex: ");
+			System.out.println(numHex);
+			
+		} 
+		
+		else if(tipo.equals("hex")) {
+			System.out.println("Case " + caso + ":\n");
+			String[] numBin = hexToBin(n.split(""));
    				for(int cont=0; cont<numBin.length; cont++) {
-   					System.out.println(numBin[i]);
+//   					System.out.println(numBin[i]);
    				}
    			}
-   		}
+
    		
    }
    		
