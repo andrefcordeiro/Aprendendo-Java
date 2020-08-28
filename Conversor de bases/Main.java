@@ -28,16 +28,11 @@ public class Main {
 		
 		for(int i=0; i<n.length; i+=4) {
 			
-			String[] quatroNums = {n[i], n[i+1], n[i+2], n[i+3]};   
-			
-//			for(int cont=0; cont<4; cont++) {
-//				System.out.print(quatroNums[cont] + " ");
-//			}
-//			System.out.println();
-//			
+			String[] quatroNums = {n[i], n[i+1], n[i+2], n[i+3]};    
+		
 			double numDec = binToDec(quatroNums); 
 			
-			switch((int)numDec) {
+			switch((int)numDec) { 
 				
 				case 10: 
 					numHex[c] = "A";
@@ -155,7 +150,15 @@ public class Main {
 		String tipo = input.next();
 	
 		if(tipo.equals("bin")) { //BINÁRIO
-			 
+			
+			StringBuilder nStrBuilder = new StringBuilder(n);
+			
+			while(nStrBuilder.length() % 4 != 0) { //completando os "0" à esquerda, para formar os conjuntos de 4 digitos
+				
+				nStrBuilder.insert(0, "0");
+			}
+			
+			n = nStrBuilder.toString(); 
 			double numDec = binToDec(n.split(""));
 			System.out.printf("Em dec: %.0f \n", numDec);
 			String numHex = binToHex(n.split(""));
@@ -183,21 +186,21 @@ public class Main {
 		else if(tipo.equals("hex")) { //HEXADECIMAL
 			
 			String[] numBin = hexToBin(n.split("")); 
-			System.out.printf("Em bin: ");
+			System.out.printf("Em bin: "); 
 			
 			for(int cont=0; cont<numBin.length; cont++) { 
-				if(cont % 4 == 0 && cont != 0)   
+				if(cont % 4 == 0 && cont != 0)    
 					System.out.print(" ");   
    				System.out.print(numBin[cont] + ""); 
-			}  
+			}   
 			  
-			double numDec = binToDec(numBin);  
-			System.out.printf("\nEm dec: %.0f", numDec); 
+			double numDec = binToDec(numBin);   
+			System.out.printf("\nEm dec: %.0f", numDec);    
 			 
-		}	
+		}	 
 		
-		input.close();
+		input.close();  
    		
-   }
+   } 
    		 	
 } 
