@@ -1,1 +1,1 @@
-Repositório relacionado aos programas desenvolvidos durante o meu aprendizado na linguagem Java
+Repositório contendo alguns programas envolvendo conceitos básicos de java desenvolvidos durante o meu aprendizado da linguagem
