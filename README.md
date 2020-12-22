@@ -1,4 +1,4 @@
-# Aprendendo Java <img src= "_images/java-logo.png" width="50" height="50">
+# Aprendendo Java width="50" height="50">
 
 
 
